@@ -5,6 +5,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.junit.Test;
 
+
 public class ShiroTest {
     @Test
     public void get(){
@@ -17,7 +18,7 @@ public class ShiroTest {
         //创建主体
         Subject subject=SecurityUtils.getSubject();
         //创建令牌
-        UsernamePasswordToken token=new UsernamePasswordToken("zhangsan","123456");
+        UsernamePasswordToken token=new UsernamePasswordToken("admin","123456");
         //主体对令牌进行登录验证
         subject.login(token);
         //判断用户的认证状态，合法性

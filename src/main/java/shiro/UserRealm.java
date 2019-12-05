@@ -3,8 +3,12 @@ package shiro;
 import entity.User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserRealm extends AuthorizingRealm {
     /**
@@ -34,8 +38,25 @@ public class UserRealm extends AuthorizingRealm {
         return new SimpleAuthenticationInfo(user,password,getName());
     }
 
+    /**
+     * 授权
+     * @param principalCollection
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        //初始化简单的授权对象
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        /* 初始化角色信息表 */
+        Set<String> roles=new HashSet<String>();
+        roles.add("admin");
+        Set<String>permission=new HashSet<String>();
+        permission.add("user:create");
+        permission.add("user:delete");
+        permission.add("user:update");
+        simpleAuthorizationInfo.setRoles(roles);
+        simpleAuthorizationInfo.setStringPermissions(permission);
+
+        return simpleAuthorizationInfo;
     }
 }
